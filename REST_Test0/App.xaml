@@ -1,0 +1,8 @@
+﻿<Application
+    x:Class="REST_Test0.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:REST_Test0"
+    RequestedTheme="Light">
+
+</Application>
