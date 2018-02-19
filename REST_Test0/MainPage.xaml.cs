@@ -25,7 +25,7 @@ namespace REST_Test0
         public MainPage()
         {
             this.InitializeComponent();
-            Core.InitializeCore("my-secret-domato", "AIzaSyBwZTuiRuOCaOjlPjZTLNlforrzgPd2i30");
+            Core.InitializeCore(Constants.ProjectID, Constants.APIKey);
         }
 
         private async void SignUp_Click(object sender, RoutedEventArgs e)
