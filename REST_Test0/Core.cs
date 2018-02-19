@@ -20,6 +20,7 @@ namespace REST_Test0
         public static User CurrentUser;
 
         #region PublicMethods
+
         public static void InitializeCore(string projectID, string apiKey)
         {
             ProjectID = projectID;
@@ -34,7 +35,6 @@ namespace REST_Test0
         public static async Task SignInWithEmailPasswordAsync(string email, string password)
         {
             CurrentUser = await AuthUsingEmailPassword(email, password);
-            await RefreshUserToken(CurrentUser);
         }
 
         public static async Task<User> RefreshUserToken(User _user)
@@ -69,7 +69,7 @@ namespace REST_Test0
             }
         }
 
-        public static async void ResetPassword(string email)
+        public static async Task ResetPassword(string email)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -97,7 +97,31 @@ namespace REST_Test0
             }
         }
 
-
+        public static async Task DeleteUserAccount(User _user)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
+                var keyValues = new Dictionary<string, object>()
+                {
+                    {"idToken",_user.idToken }
+                };
+                var url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/deleteAccount?key=" + APIKey;
+                try
+                {
+                    var refreshTokenResponse = await url
+                   .WithHeader("Accept", "application/json")
+                   .PostJsonAsync(keyValues)
+                   .ReceiveJson<RefreshTokenResponse>();
+                }
+                catch (FlurlHttpException ex)
+                {
+                    var error = ex.GetResponseJson<ErrorBlock>();
+                    Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog(error.error.message);
+                    await dialog.ShowAsync();
+                }
+            }
+        }
 
         #endregion
 
@@ -168,6 +192,15 @@ namespace REST_Test0
             }
         }
         public bool isSuccess { get; set; }
+        public async void RefreshUserToken()
+        {
+            await Core.RefreshUserToken(this);
+        }
+
+        public async void DeleteAccount()
+        {
+            await Core.DeleteUserAccount(this);
+        }
     }
 
     public class ErrorBlock
