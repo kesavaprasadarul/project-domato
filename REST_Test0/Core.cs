@@ -115,7 +115,7 @@ namespace REST_Test0
                     {"returnSecureToken", true }
                 };
                 string url = string.Empty;
-                if (isSignUp) url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + APIKey;
+                if (isSignUp) url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + APIKey;
                 else url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + APIKey;
                 User user = new User();
                 try
