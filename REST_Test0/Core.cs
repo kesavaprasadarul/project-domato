@@ -192,6 +192,7 @@ namespace REST_Test0
             }
         }
         public bool isSuccess { get; set; }
+
         public async void RefreshUserToken()
         {
             await Core.RefreshUserToken(this);
